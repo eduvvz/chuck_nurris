@@ -35,21 +35,19 @@ class _Details extends State {
         final joke = json.decode(snapshot.data.body);
         String imageUri = joke['icon_url'];
         String value = joke['value'];
-        return Container(
-          child: Column(
-            children: <Widget>[
-              Container(
-                child: Center(
-                  child: Image.network(imageUri),
-                ),
-                height: 100,
+        return Column(
+          children: <Widget>[
+            Container(
+              child: Center(
+                child: Image.network(imageUri),
               ),
-              Container(
-                child: Text(value, style: TextStyle(fontSize: 17)),
-                padding: EdgeInsets.only(left: 20, right: 20),
-              )
-            ],
-          ),
+              height: 100,
+            ),
+            Container(
+              child: Text(value, style: TextStyle(fontSize: 17)),
+              padding: EdgeInsets.only(left: 20, right: 20),
+            )
+          ],
         );
       },
       future: _getJoke(),
@@ -59,11 +57,19 @@ class _Details extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.purple,
-          title: Text('Joke of $categorie'),
-        ),
-        body: _futureDetailJoke());
+      appBar: AppBar(
+        backgroundColor: Colors.purple,
+        title: Text('Joke of $categorie'),
+      ),
+      body: _futureDetailJoke(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          
+        },
+        child: Icon(Icons.update),
+        backgroundColor: Colors.purple,
+      ),
+    );
   }
 }
 
