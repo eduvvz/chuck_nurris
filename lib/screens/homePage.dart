@@ -4,15 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import 'package:chuck_nurris/screens/details.dart';
+
 class _HomePageState extends State<HomePage> {
-  final teste = ['Jorge', 'Vitor', 'Rodrigo'];
 
   Future _getCategories() async {
-    var result = await http.get('https://api.chucknorris.io/jokes/categories');
-    return result;
+    try {
+      var result = await http.get('https://api.chucknorris.io/jokes/categories');
+      return result;
+    } catch (e) {
+      print(e);
+    }
   }
 
-  Widget futureListCategories() {
+  Widget _futureListCategories() {
     return FutureBuilder(
       builder: (context, snapshot) {
         if (snapshot.data == null) {
@@ -29,10 +34,15 @@ class _HomePageState extends State<HomePage> {
         return ListView.builder(
           itemCount: categories.length,
           itemBuilder: (context, i) {
-            return  ListTile(
+            return ListTile(
               leading: Icon(Icons.details),
               title: Text(categories[i]),
-              onTap: () => print('vamoooooo'),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Details(categories[i]),
+                ),
+              ),
             );
           },
         );
@@ -48,7 +58,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.purple,
         title: Text('Chuck Norris'),
       ),
-      body: (futureListCategories()),
+      body: (_futureListCategories()),
     );
   }
 }
